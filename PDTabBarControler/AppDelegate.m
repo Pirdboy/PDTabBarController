@@ -17,8 +17,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    UITabBarController *tabVC;
-    [tabVC setSelectedIndex:2];
+//    UITabBarController *tabVC;
+//    UITabBar *tabbar = tabVC.tabBar;
+//    [tabVC setSelectedIndex:2];
+//    [tabbar setItemWidth:1];
     return YES;
 }
 

@@ -11,14 +11,18 @@
 
 @interface PDTabBarController : UIViewController
 
+@property (nonatomic, strong) PDTabBar *tabBar;
 @property (nonatomic, strong) NSArray<UIViewController *> *viewControllers;
-
 @property (nonatomic, weak, readonly) UIViewController *selectedViewController;
+
 @property (nonatomic, assign) NSUInteger selectedIndex;
 
 - (instancetype)initWithViewControllers:(NSArray<UIViewController *> *)viewControllers tabBarItems:(NSArray<PDTabBarItem *> *)tabBarItems;
 
 - (void)showTabBar;
+
 - (void)hideTabBar;
+
+- (void)setViewController:(UIViewController *)viewController atIndex:(NSUInteger)index;
 
 @end

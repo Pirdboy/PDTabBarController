@@ -11,6 +11,7 @@
 
 @interface PDTabBar()
 
+@property (nonatomic, strong) UIImageView *topLineView;  // 顶部横线
 @end
 
 @implementation PDTabBar
