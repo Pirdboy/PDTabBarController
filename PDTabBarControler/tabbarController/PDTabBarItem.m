@@ -35,17 +35,23 @@
 
 - (void)configureSubViews {
     
-    _titleNormalColor = [UIColor blackColor];
-    _titleSelectedColor = [UIColor redColor];
+    _titleNormalColor = [UIColor redColor];
+    _titleSelectedColor = [UIColor greenColor];
     _font = [UIFont systemFontOfSize:12];
     
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.text = _title;
     [_titleLabel setFont:_font];
     [_titleLabel setTextColor:_titleNormalColor];
+    [_titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [_titleLabel sizeToFit];
+
     
     _imageView = [[UIImageView alloc] init];
     _imageView.image = _image;
+    
+    [self addSubview:_titleLabel];
+    [self addSubview:_imageView];
 }
 
 - (void)setSelected:(BOOL)selected {
@@ -69,8 +75,9 @@
     CGRect frame = self.frame;
     CGFloat width = frame.size.width;
     
+    CGRect titleFrame = _titleLabel.frame;
     _imageView.frame = (CGRect){(width-24)/2.0, 2, 24, 24};
-    _titleLabel.frame = (CGRect){(width-60)/2.0, 34, 60, 16};
+    _titleLabel.frame = (CGRect){(width-60)/2.0, 34, titleFrame.size.width, titleFrame.size.height};
     
     
 }

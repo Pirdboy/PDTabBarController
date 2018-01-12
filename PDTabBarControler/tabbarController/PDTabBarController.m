@@ -11,7 +11,7 @@
 
 static CGFloat kTabBarHeight = 49.f;
 
-@interface PDTabBarController ()
+@interface PDTabBarController ()<PDTabbarDelegate>
 
 @property (nonatomic, strong) UIView *containerView;
 @property (nonatomic, strong) UIViewController *contentViewController;
@@ -23,16 +23,20 @@ static CGFloat kTabBarHeight = 49.f;
 @synthesize selectedIndex = _selectedIndex;
 @synthesize selectedViewController = _selectedViewController;
 
+#pragma mark - Init
 - (instancetype)initWithViewControllers:(NSArray<UIViewController *> *)viewControllers tabBarItems:(NSArray<PDTabBarItem *> *)tabBarItems {
     self = [super init];
     if(self) {
-        _tabBar = [[PDTabBar alloc] initWithTabBarItems:tabBarItems];
-        _viewControllers = viewControllers;
-        _selectedIndex = 0;
+        NSInteger count = MIN([viewControllers count], [tabBarItems count]);
+        
+        _tabBar = [[PDTabBar alloc] initWithTabBarItems:[tabBarItems subarrayWithRange:(NSRange){0, count}]];
+        _tabBar.delegate = self;
+        _viewControllers = [viewControllers subarrayWithRange:(NSRange){0, count}];
     }
     return self;
 }
 
+#pragma mark - View Lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -44,10 +48,19 @@ static CGFloat kTabBarHeight = 49.f;
     _containerView = [[UIView alloc] initWithFrame:bounds];
     [self.view addSubview:_containerView];
     _tabBar.frame = (CGRect){0, bounds.size.height-kTabBarHeight, bounds.size.width, kTabBarHeight};
+    _tabBar.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
+                                UIViewAutoresizingFlexibleTopMargin);
     [self.view addSubview:_tabBar];
     
-    self.contentViewController = _viewControllers[_selectedIndex];
+    self.selectedIndex = 0;
+    [self showTabBar];
 }
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+}
+
+#pragma mark - show/hide TabBar
 
 - (void)showTabBar {
     CGRect bounds = self.view.bounds;
@@ -62,11 +75,53 @@ static CGFloat kTabBarHeight = 49.f;
 #pragma mark - Set ViewController
 
 - (void)setViewController:(UIViewController *)viewController atIndex:(NSUInteger)index {
-    
+    NSMutableArray *oldArray = [NSMutableArray arrayWithArray:_viewControllers];
+    if(oldArray.count > index) {
+        [oldArray replaceObjectAtIndex:index withObject:viewController];
+        self.viewControllers = oldArray;
+    }
 }
 
 - (void)setViewControllers:(NSArray<UIViewController *> *)viewControllers {
+    if (viewControllers == _viewControllers) {
+        return;
+    }
+    if (_viewControllers) {
+        for (UIViewController *vc in _viewControllers) {
+            
+            [vc willMoveToParentViewController:nil];
+            [vc.view removeFromSuperview];
+            [vc removeFromParentViewController];
+        }
+    }
     
+    _viewControllers = viewControllers;
+    
+    if(_viewControllers.count > _selectedIndex) {
+        self.selectedIndex = _selectedIndex;
+    } else if(_viewControllers.count > 0){
+        self.selectedIndex = 0;
+    }
+}
+
+
+
+#pragma mark - set Selected
+
+- (void)setSelectedIndex:(NSUInteger)selectedIndex {
+    if(!_viewControllers|| _viewControllers.count<=selectedIndex) {
+        return;
+    }
+    _selectedIndex = selectedIndex;
+    [_tabBar setSelectedItem:_tabBar.items[_selectedIndex]];
+    self.contentViewController = _viewControllers[_selectedIndex];
+}
+
+- (UIViewController *)selectedViewController {
+    if(_selectedIndex < _viewControllers.count) {
+        return _viewControllers[_selectedIndex];
+    }
+    return nil;
 }
 
 - (void)setContentViewController:(UIViewController *)contentViewController {
@@ -75,7 +130,6 @@ static CGFloat kTabBarHeight = 49.f;
     [oldViewController willMoveToParentViewController:nil];
     [oldViewController.view removeFromSuperview];
     [oldViewController removeFromParentViewController];
-    
     
     UIViewController *newViewController = contentViewController;
     
@@ -89,18 +143,16 @@ static CGFloat kTabBarHeight = 49.f;
     _contentViewController = newViewController;
 }
 
-#pragma mark - Selected
+#pragma mark -
+#pragma mark - PDTabBarDelegate
 
-- (void)setSelectedIndex:(NSUInteger)selectedIndex {
-    if(selectedIndex>=_viewControllers.count) {
-        return;
+- (void)tabBar:(PDTabBar *)tabBar didSelectItemAtIndex:(NSUInteger)index {
+    
+    self.selectedIndex = index;
+    
+    if([self.delegate respondsToSelector:@selector(tabBarController:didSelectViewController:)]) {
+        [self.delegate tabBarController:self didSelectViewController:_viewControllers[index]];
     }
-    _selectedIndex = selectedIndex;
-    //...替换当前viewController
-}
-
-- (UIViewController *)selectedViewController {
-    return _viewControllers[_selectedIndex];
 }
 
 #pragma mark -
