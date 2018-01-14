@@ -22,8 +22,15 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
+
+
 #import <UIKit/UIKit.h>
 #import "PDTabBarItem.h"
+
+typedef enum : NSUInteger {
+    PDTabBarStyleTranslucent = 0,
+    PDTabBarStyleWhiteBackground,
+} PDTabBarStyle;
 
 @class PDTabBar;
 
@@ -33,10 +40,16 @@
 
 @interface PDTabBar : UIView
 
+/// The tabBar Style: PDTabBarStyleTranslucent(using UIVisualEffectView with ExtraLight), PDTabBarStyleWhiteBackground(white background)
+@property (nonatomic, assign) PDTabBarStyle style;
+
+/// The selected tabBarItem
 @property (nonatomic, weak) PDTabBarItem *selectedItem;
 
+/// tabBar Items
 @property (nonatomic, strong) NSArray<PDTabBarItem *> *items;
 
+/// The tabBar's delegate object
 @property (nonatomic, weak) id<PDTabbarDelegate> delegate;
 
 - (instancetype)initWithTabBarItems:(NSArray<PDTabBarItem *> *)tabItems;

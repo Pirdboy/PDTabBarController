@@ -11,9 +11,12 @@
 
 @interface PDTabBar()
 
-@property (nonatomic, strong) UIView *topLineView;  // 顶部横线
-@property (nonatomic, strong) UIImageView *backgroundView;  // 背景
+@property (nonatomic, strong) UIView *topLineView;
+
+@property (nonatomic, strong) UIImageView *backgroundView;
+
 @property (nonatomic, strong) UIVisualEffectView *effectView;
+
 @end
 
 @implementation PDTabBar
@@ -33,9 +36,12 @@
     UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
     _effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
     [self addSubview:_effectView];
-    // Or use backgroundView to set custom background
-    //... _backgroundView = [[UIImageView alloc] init];
     
+    // Or use backgroundView to set custom background
+    _backgroundView = [[UIImageView alloc] init];
+    _backgroundView.backgroundColor = [UIColor whiteColor];
+    [self addSubview:_backgroundView];
+    self.style = PDTabBarStyleTranslucent;
     
     _topLineView = [[UIView alloc] init];
     _topLineView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3];
@@ -44,7 +50,7 @@
     for(int i=0;i<_items.count;i++) {
         PDTabBarItem *item = _items[i];
         [self addSubview:item];
-        [item addTarget:self action:@selector(tabBarItemSelected:) forControlEvents:UIControlEventTouchUpInside];
+        [item addTarget:self action:@selector(tabBarItemSelected:) forControlEvents:UIControlEventTouchDown];
     }
 }
 
@@ -52,6 +58,7 @@
     [super layoutSubviews];
     CGRect frame = self.bounds;
     _effectView.frame = self.bounds;
+    _backgroundView.frame = self.bounds;
     _topLineView.frame = (CGRect){0, -0.33, frame.size.width, 0.33};
     
     if(_items.count > 0) {
@@ -65,31 +72,56 @@
     }
 }
 
-#pragma mark - TabItem Select
+- (void)setStyle:(PDTabBarStyle)style {
+    _style = style;
+    switch (_style) {
+        case PDTabBarStyleTranslucent:
+            [_effectView setHidden:NO];
+            [_backgroundView setHidden:YES];
+            break;
+        case PDTabBarStyleWhiteBackground:
+            [_effectView setHidden:YES];
+            [_backgroundView setHidden:NO];
+            break;
+        default:
+            break;
+    }
+}
 
 - (void)tabBarItemSelected:(PDTabBarItem *)sender {
     self.selectedItem = sender;
     
     NSUInteger index = [_items indexOfObject:sender];
     if(index != NSNotFound) {
-        
         // 通过delegate方式回调
         if([_delegate respondsToSelector:@selector(tabBar:didSelectItemAtIndex:)]) {
             [_delegate tabBar:self didSelectItemAtIndex:index];
         }
     }
-    
-    NSLog(@"当前sender selected:%@",sender.isSelected?@"Y":@"N");
 }
 
 - (void)setSelectedItem:(PDTabBarItem *)selectedItem {
-    if (selectedItem == _selectedItem) {
-        return;
-    }
     [_selectedItem setSelected:NO];
     
     _selectedItem = selectedItem;
     [_selectedItem setSelected:YES];
 }
+
+- (void)setItems:(NSArray<PDTabBarItem *> *)items {
+    if(_items == items) {
+        return;
+    }
+    for(PDTabBarItem *item in _items) {
+        [item removeFromSuperview];
+    }
+    
+    _items = items;
+    for(int i=0;i<_items.count;i++) {
+        PDTabBarItem *item = _items[i];
+        [self addSubview:item];
+        [item addTarget:self action:@selector(tabBarItemSelected:) forControlEvents:UIControlEventTouchDown];
+    }
+}
+
 
 @end

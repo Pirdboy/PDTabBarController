@@ -8,48 +8,21 @@
 
 #import "AppDelegate.h"
 #import "PDTabBarController.h"
-
-float r(){
-    uint32_t a = arc4random_uniform(10000)%255;
-    return a*1.0/255.0;
-}
+#import "DemoViewController.h"
 
 @interface AppDelegate ()
-
-
 @end
 
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
     
-    
-    UIViewController *vc1 = [[UIViewController alloc] init];
-    vc1.view.backgroundColor = [UIColor redColor];//[UIColor colorWithRed:r() green:r() blue:r() alpha:1.0];
-    UIViewController *vc2 = [[UIViewController alloc] init];
-    vc2.view.backgroundColor = [UIColor colorWithRed:r() green:r() blue:r() alpha:1.0];
-    UIViewController *vc3 = [[UIViewController alloc] init];
-    vc3.view.backgroundColor = [UIColor colorWithRed:r() green:r() blue:r() alpha:1.0];
-    UIViewController *vc4 = [[UIViewController alloc] init];
-    vc4.view.backgroundColor = [UIColor colorWithRed:r() green:r() blue:r() alpha:1.0];
-    UIViewController *vc5 = [[UIViewController alloc] init];
-    vc5.view.backgroundColor = [UIColor colorWithRed:r() green:r() blue:r() alpha:1.0];
-    NSArray *array = @[vc1, vc2, vc3, vc4, vc5];
-    
-    PDTabBarItem *item1 = [[PDTabBarItem alloc] initWithTitle:@"首页" image:[UIImage imageNamed:@"home"] selectedImage:[UIImage imageNamed:@"home_selected"]];
-    PDTabBarItem *item2 = [[PDTabBarItem alloc] initWithTitle:@"参考" image:[UIImage imageNamed:@"reference"] selectedImage:[UIImage imageNamed:@"reference_selected"]];
-    PDTabBarItem *item3 = [[PDTabBarItem alloc] initWithTitle:@"理财" image:[UIImage imageNamed:@"fortune"] selectedImage:[UIImage imageNamed:@"fortune_selected"]];
-    PDTabBarItem *item4 = [[PDTabBarItem alloc] initWithTitle:@"生活" image:[UIImage imageNamed:@"life"] selectedImage:[UIImage imageNamed:@"life_selected"]];
-    PDTabBarItem *item5 = [[PDTabBarItem alloc] initWithTitle:@"我的" image:[UIImage imageNamed:@"mine"] selectedImage:[UIImage imageNamed:@"mine_selected"]];
-    NSArray *array2 = @[item1, item2, item3, item4, item5];
-    
-    PDTabBarController *tabBarController = [[PDTabBarController alloc] initWithViewControllers:array tabBarItems:array2];
-    
+    DemoViewController *vc = [[DemoViewController alloc] init];
     CGRect bounds = [UIScreen mainScreen].bounds;
     _window = [[UIWindow alloc] initWithFrame:bounds];
-    _window.rootViewController = tabBarController;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    _window.rootViewController = nav;
     [_window makeKeyAndVisible];
 
     return YES;

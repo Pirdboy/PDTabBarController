@@ -35,27 +35,55 @@
 
 @end
 
-@interface PDTabBarController : UIViewController
+NS_CLASS_AVAILABLE_IOS(8_0) @interface PDTabBarController : UIViewController
 
+/// tabBarController's delegate
 @property (nonatomic, weak) id<PDTabBarControllerDelegate> delegate;
 
+/// the corresponding tabBar
 @property (nonatomic, strong, readonly) PDTabBar *tabBar;
 
+/// The tabBarController's child ViewControllers
 @property (nonatomic, strong) NSArray<UIViewController *> *viewControllers;
 
+/// the selected ViewController
 @property (nonatomic, weak, readonly) UIViewController *selectedViewController;
 
+/// the selected Index
 @property (nonatomic, assign) NSUInteger selectedIndex;
 
 - (instancetype)initWithViewControllers:(NSArray<UIViewController *> *)viewControllers tabBarItems:(NSArray<PDTabBarItem *> *)tabBarItems;
 
-- (void)showTabBar;
 
-- (void)hideTabBar;
+/**
+ show the tabBar
 
-- (void)setViewControllers:(NSArray<UIViewController *> *)viewControllers;
+ @param animated If YES, it will show the tabBar with animation
+ */
+- (void)showTabBarAnimated:(BOOL)animated;
 
+/**
+ hide the tabBar
+
+ @param animated If YES, it will hide the tabBar with animation
+ */
+- (void)hideTabBarAnimated:(BOOL)animated;
+
+/**
+ set new ViewController at Index
+
+ @param viewController the viewController to be set
+ @param index the index in the tabBarController's childViewControllers
+ */
 - (void)setViewController:(UIViewController *)viewController atIndex:(NSUInteger)index;
 
+@end
+
+@interface UIViewController (PDTabBarController)
+
+// TODO: 增加获取当前ViewController对应的tabBarItem的方法
+
+/// The nearest ancestor in the view controller hierarchy that is a tab bar controller.
+- (PDTabBarController *)pd_tabBarController;
 
 @end

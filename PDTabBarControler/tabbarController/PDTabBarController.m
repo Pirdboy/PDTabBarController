@@ -51,9 +51,9 @@ static CGFloat kTabBarHeight = 49.f;
     _tabBar.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
                                 UIViewAutoresizingFlexibleTopMargin);
     [self.view addSubview:_tabBar];
-    
+        
     self.selectedIndex = 0;
-    [self showTabBar];
+    [self showTabBarAnimated:NO];
 }
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
@@ -62,14 +62,17 @@ static CGFloat kTabBarHeight = 49.f;
 
 #pragma mark - show/hide TabBar
 
-- (void)showTabBar {
-    CGRect bounds = self.view.bounds;
-    _tabBar.frame = (CGRect){0, bounds.size.height-kTabBarHeight, bounds.size.width, kTabBarHeight};
+- (void)showTabBarAnimated:(BOOL)animated {
+    [UIView animateWithDuration:animated ? 0.2:0.f animations:^(void){
+        CGRect bounds = self.view.bounds;
+        _tabBar.frame = (CGRect){0, bounds.size.height-kTabBarHeight, bounds.size.width, kTabBarHeight};
+    }];
 }
-
-- (void)hideTabBar {
-    CGRect bounds = self.view.bounds;
-    _tabBar.frame = (CGRect){0, bounds.size.height, bounds.size.width, kTabBarHeight};
+- (void)hideTabBarAnimated:(BOOL)animated {
+    [UIView animateWithDuration:animated ? 0.2:0.f animations:^(void){
+        CGRect bounds = self.view.bounds;
+        _tabBar.frame = (CGRect){0, bounds.size.height, bounds.size.width, kTabBarHeight};
+    }];
 }
 
 #pragma mark - Set ViewController
@@ -113,8 +116,8 @@ static CGFloat kTabBarHeight = 49.f;
         return;
     }
     _selectedIndex = selectedIndex;
-    [_tabBar setSelectedItem:_tabBar.items[_selectedIndex]];
     self.contentViewController = _viewControllers[_selectedIndex];
+    [_tabBar setSelectedItem:_tabBar.items[_selectedIndex]];
 }
 
 - (UIViewController *)selectedViewController {
@@ -126,15 +129,13 @@ static CGFloat kTabBarHeight = 49.f;
 
 - (void)setContentViewController:(UIViewController *)contentViewController {
     UIViewController *oldViewController = _contentViewController;
+    UIViewController *newViewController = contentViewController;
     
     [oldViewController willMoveToParentViewController:nil];
     [oldViewController.view removeFromSuperview];
     [oldViewController removeFromParentViewController];
     
-    UIViewController *newViewController = contentViewController;
-    
-    if (newViewController) {
-        [newViewController willMoveToParentViewController:self];
+    if(newViewController) {
         [self addChildViewController:newViewController];
         [_containerView addSubview:newViewController.view];
         newViewController.view.frame = _containerView.bounds;
@@ -179,6 +180,20 @@ static CGFloat kTabBarHeight = 49.f;
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
+@end
 
+@implementation UIViewController (PDTabBarController)
+
+- (PDTabBarController *)pd_tabBarController {
+    UIViewController *parent = self.parentViewController;
+    while(parent && ![parent isKindOfClass:[PDTabBarController class]]) {
+        parent = parent.parentViewController;
+    }
+    if([parent isKindOfClass:[PDTabBarController class]]) {
+        return (PDTabBarController *)parent;
+    } else {
+        return nil;
+    }
+}
 
 @end
