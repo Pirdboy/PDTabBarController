@@ -13,6 +13,11 @@
 		C14605EC20046B7400B19245 /* PDTabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C14605EB20046B7400B19245 /* PDTabBarItem.m */; };
 		C14605EF20046B8600B19245 /* PDTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = C14605EE20046B8600B19245 /* PDTabBar.m */; };
 		C14605F220046B9A00B19245 /* PDTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C14605F120046B9A00B19245 /* PDTabBarController.m */; };
+		C1706D90200EE56700DB7C13 /* config_6_2.xml in Resources */ = {isa = PBXBuildFile; fileRef = C1706D8F200EE56700DB7C13 /* config_6_2.xml */; };
+		C1706D93200EE58E00DB7C13 /* PDXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C1706D92200EE58E00DB7C13 /* PDXMLParser.m */; };
+		C1706D9F200EF54300DB7C13 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C1706D9E200EF51900DB7C13 /* libxml2.tbd */; };
+		C1706DA1200EF65200DB7C13 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C1706DA0200EF65200DB7C13 /* libxml2.2.dylib */; };
+		C1706DA3200EFA4100DB7C13 /* simple.xml in Resources */ = {isa = PBXBuildFile; fileRef = C1706DA2200EFA4000DB7C13 /* simple.xml */; };
 		C17487BC2008BC08005CB308 /* main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C17487BB2008BC08005CB308 /* main.storyboard */; };
 		C1F47C242008A0470008FC03 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C1F47C232008A0470008FC03 /* LaunchScreen.storyboard */; };
 		CB38686C200B89FB004F4D38 /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB38686B200B89FB004F4D38 /* DemoViewController.m */; };
@@ -48,6 +53,12 @@
 		C14605EE20046B8600B19245 /* PDTabBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PDTabBar.m; sourceTree = "<group>"; };
 		C14605F020046B9A00B19245 /* PDTabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PDTabBarController.h; sourceTree = "<group>"; };
 		C14605F120046B9A00B19245 /* PDTabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PDTabBarController.m; sourceTree = "<group>"; };
+		C1706D8F200EE56700DB7C13 /* config_6_2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = config_6_2.xml; sourceTree = "<group>"; };
+		C1706D91200EE58E00DB7C13 /* PDXMLParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PDXMLParser.h; sourceTree = "<group>"; };
+		C1706D92200EE58E00DB7C13 /* PDXMLParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PDXMLParser.m; sourceTree = "<group>"; };
+		C1706D9E200EF51900DB7C13 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
+		C1706DA0200EF65200DB7C13 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = ../../../../../usr/lib/libxml2.2.dylib; sourceTree = "<group>"; };
+		C1706DA2200EFA4000DB7C13 /* simple.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = simple.xml; sourceTree = "<group>"; };
 		C17487BB2008BC08005CB308 /* main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = main.storyboard; sourceTree = "<group>"; };
 		C1F47C232008A0470008FC03 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CB38686A200B89FB004F4D38 /* DemoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController.h; sourceTree = "<group>"; };
@@ -64,6 +75,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1706DA1200EF65200DB7C13 /* libxml2.2.dylib in Frameworks */,
+				C1706D9F200EF54300DB7C13 /* libxml2.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,6 +88,7 @@
 			children = (
 				C14605D1200466CA00B19245 /* PDTabBarControler */,
 				C14605D0200466CA00B19245 /* Products */,
+				C1706D94200EE59F00DB7C13 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -121,9 +135,20 @@
 			path = demo;
 			sourceTree = "<group>";
 		};
+		C1706D94200EE59F00DB7C13 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C1706DA0200EF65200DB7C13 /* libxml2.2.dylib */,
+				C1706D9E200EF51900DB7C13 /* libxml2.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C176729C20088C1F00B37F3F /* resource */ = {
 			isa = PBXGroup;
 			children = (
+				C1706DA2200EFA4000DB7C13 /* simple.xml */,
+				C1706D8F200EE56700DB7C13 /* config_6_2.xml */,
 				CB38687C200B9AD0004F4D38 /* icon1.png */,
 				CB38687E200B9AF8004F4D38 /* icon2.png */,
 				CB386880200B9B41004F4D38 /* icon3.png */,
@@ -141,6 +166,8 @@
 				CB38686B200B89FB004F4D38 /* DemoViewController.m */,
 				CB386876200B8DDF004F4D38 /* ExampleViewController.h */,
 				CB386877200B8DDF004F4D38 /* ExampleViewController.m */,
+				C1706D91200EE58E00DB7C13 /* PDXMLParser.h */,
+				C1706D92200EE58E00DB7C13 /* PDXMLParser.m */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -207,8 +234,10 @@
 				C14605DC200466CA00B19245 /* Assets.xcassets in Resources */,
 				C17487BC2008BC08005CB308 /* main.storyboard in Resources */,
 				CB38687F200B9AF8004F4D38 /* icon2.png in Resources */,
+				C1706DA3200EFA4100DB7C13 /* simple.xml in Resources */,
 				CB38687D200B9AD0004F4D38 /* icon1.png in Resources */,
 				CB386881200B9B41004F4D38 /* icon3.png in Resources */,
+				C1706D90200EE56700DB7C13 /* config_6_2.xml in Resources */,
 				C1F47C242008A0470008FC03 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -222,6 +251,7 @@
 			files = (
 				CB386878200B8DDF004F4D38 /* ExampleViewController.m in Sources */,
 				C14605EF20046B8600B19245 /* PDTabBar.m in Sources */,
+				C1706D93200EE58E00DB7C13 /* PDXMLParser.m in Sources */,
 				C14605EC20046B7400B19245 /* PDTabBarItem.m in Sources */,
 				C14605F220046B9A00B19245 /* PDTabBarController.m in Sources */,
 				C14605E2200466CA00B19245 /* main.m in Sources */,
@@ -343,9 +373,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6HQNPNL2GN;
+				FRAMEWORK_SEARCH_PATHS = /usr/lib/libxml2.dylib;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = PDTabBarControler/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_BUNDLE_IDENTIFIER = b.pird.PDTabBarControler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -358,9 +391,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6HQNPNL2GN;
+				FRAMEWORK_SEARCH_PATHS = /usr/lib/libxml2.dylib;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = PDTabBarControler/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_BUNDLE_IDENTIFIER = b.pird.PDTabBarControler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -57,6 +57,9 @@ float r(){
     if(indexPath.row == 0) {
         [self pushToTabBarController];
     }
+    else if(indexPath.row == 1) {
+        // 测试xml解析
+    }
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 - (void)pushToTabBarController {

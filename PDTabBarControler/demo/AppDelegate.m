@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "PDTabBarController.h"
 #import "DemoViewController.h"
+#import "PDXMLParser.h"
 
 @interface AppDelegate ()
 @end
@@ -25,6 +26,9 @@
     _window.rootViewController = nav;
     [_window makeKeyAndVisible];
 
+    
+    PDXMLParser *xmlParser = [[PDXMLParser alloc] init];
+    [xmlParser parseFile];
     return YES;
 }
 
